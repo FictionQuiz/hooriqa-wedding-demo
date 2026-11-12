@@ -1,1 +1,446 @@
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOORIQA STUDIO | Ayaan & Zara</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --wine:#400b19;
+ --red:#6e1528;
+ --gold:#d5b16b;
+ --cream:#f8eddf;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:#21070e;color:var(--cream);
+ font-family:Montserrat,sans-serif;
+}
+button{font:inherit;cursor:pointer}
+.screen{
+ min-height:100vh;display:none;position:relative;
+ overflow:hidden;align-items:center;justify-content:center;
+ padding:35px 18px;
+ background:
+ radial-gradient(ellipse at 50% 40%,#76283a 0%,#3b0b19 48%,#17050b 100%);
+}
+.screen.active{display:flex;animation:fade .8s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.gold-line{
+ position:absolute;inset:15px;border:1px solid #c7a15c66;
+ pointer-events:none;
+}
+.gold-line:before,.gold-line:after{
+ content:"✦";position:absolute;color:var(--gold);font-size:22px;
+}
+.gold-line:before{top:-12px;left:50%;transform:translateX(-50%)}
+.gold-line:after{bottom:-12px;left:50%;transform:translateX(-50%)}
+.rose{
+ position:absolute;font-size:65px;opacity:.55;
+ filter:drop-shadow(0 0 18px #d39a7b);
+}
+.r1{top:5%;left:4%}.r2{bottom:5%;right:4%}
+.r3{top:8%;right:5%;font-size:35px}
+.r4{bottom:8%;left:5%;font-size:35px}
+.content{
+ position:relative;z-index:2;text-align:center;
+ width:min(650px,100%);
+}
+.brand{
+ letter-spacing:7px;color:var(--gold);
+ font-size:11px;margin-bottom:20px;
+}
+.script{
+ font-family:"Great Vibes",cursive;
+ color:#f1d6a2;font-size:clamp(45px,9vw,78px);
+ font-weight:400;
+}
+.names{
+ font-family:"Cormorant Garamond",serif;
+ font-size:clamp(38px,8vw,65px);
+ letter-spacing:3px;color:#fff0d9;
+}
+.small{
+ color:#e0c8b5;font-size:11px;
+ letter-spacing:4px;text-transform:uppercase;
+}
+.heart-wrap{
+ width:min(310px,75vw);height:280px;margin:25px auto;
+ position:relative;display:grid;place-items:center;
+ filter:drop-shadow(0 18px 30px #0009);
+}
+.heart{
+ position:absolute;width:190px;height:190px;
+ background:linear-gradient(140deg,#9d3044,#510c20 65%,#280610);
+ transform:rotate(-45deg);
+ border:2px solid #d2ae6c;
+ box-shadow:inset 0 0 25px #e88b8b44,0 0 35px #c18a4b44;
+}
+.heart:before,.heart:after{
+ content:"";position:absolute;width:190px;height:190px;
+ border-radius:50%;background:inherit;border:2px solid #d2ae6c;
+}
+.heart:before{top:-96px;left:0}
+.heart:after{left:96px;top:0}
+.heart-center{
+ position:relative;z-index:3;
+ width:82px;height:82px;border-radius:50%;
+ background:radial-gradient(circle at 35% 30%,#f6dfa2,#a87530 65%,#593514);
+ border:3px double #f4d99a;
+ display:grid;place-items:center;
+ color:#4b1520;font-family:"Cormorant Garamond";
+ font-size:24px;font-weight:bold;
+ box-shadow:0 5px 18px #0009;
+}
+.gold-button{
+ border:1px solid var(--gold);background:linear-gradient(120deg,#d8b76e,#93642e);
+ color:#2b1010;padding:15px 30px;
+ letter-spacing:3px;font-size:10px;
+ text-transform:uppercase;transition:.3s;
+}
+.gold-button:hover{transform:translateY(-3px);box-shadow:0 8px 25px #d3ad6544}
+.text-button{
+ color:#e5c98d;background:none;border:0;
+ letter-spacing:3px;font-size:10px;margin-top:20px;
+}
+.divider{
+ width:100px;height:1px;background:var(--gold);
+ margin:20px auto;
+}
+
+/* SCRATCH */
+.scratch-box{
+ width:min(330px,85vw);height:330px;margin:25px auto;
+ position:relative;display:grid;place-items:center;
+}
+.reveal-heart{
+ width:200px;height:200px;position:absolute;
+ transform:rotate(-45deg);
+ background:linear-gradient(135deg,#fff0ce,#d7ad60);
+ display:grid;place-items:center;
+}
+.reveal-heart:before,.reveal-heart:after{
+ content:"";position:absolute;width:200px;height:200px;
+ border-radius:50%;background:inherit;
+}
+.reveal-heart:before{top:-100px}
+.reveal-heart:after{left:100px}
+.date-text{
+ position:relative;z-index:2;transform:rotate(45deg);
+ color:#571626;text-align:center;width:150px;
+}
+.date-text strong{
+ display:block;font:600 31px "Cormorant Garamond";
+}
+.date-text span{font-size:9px;letter-spacing:2px}
+#scratchCanvas{
+ position:absolute;inset:0;width:100%;height:100%;
+ z-index:5;touch-action:none;cursor:crosshair;
+}
+.hint{font-size:10px;letter-spacing:2px;color:#e8c990}
+
+/* ENVELOPE */
+.envelope{
+ width:min(330px,85vw);height:220px;margin:45px auto;
+ position:relative;background:linear-gradient(145deg,#8c263b,#4a0b1c);
+ border:1px solid var(--gold);
+ box-shadow:0 20px 50px #0008;
+}
+.envelope:before{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(35deg,transparent 49%,#b36b64 50%,transparent 51%),
+ linear-gradient(-35deg,transparent 49%,#b36b64 50%,transparent 51%);
+}
+.flap{
+ position:absolute;top:0;left:0;width:100%;height:100%;
+ background:linear-gradient(140deg,#a13d4d,#5b1025);
+ clip-path:polygon(0 0,100% 0,50% 65%);
+ border-bottom:1px solid var(--gold);
+}
+.seal{
+ position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);
+ width:67px;height:67px;border-radius:50%;
+ display:grid;place-items:center;
+ background:radial-gradient(circle at 35% 30%,#f3d795,#a87530 70%);
+ color:#531525;border:3px double #f6dda0;
+ font: bold 23px "Cormorant Garamond";
+ box-shadow:0 5px 15px #0008;
+ z-index:3;
+}
+.envelope.open .flap{transform:rotateX(180deg);transform-origin:top;transition:1s}
+.envelope.open .seal{opacity:0;transition:.4s}
+
+/* WEDDING */
+#story{display:block;padding:0;background:#21070e}
+.hero{
+ min-height:90vh;display:grid;place-items:center;text-align:center;
+ padding:50px 20px;
+ background:
+ linear-gradient(#21070e88,#21070ecc),
+ url('assets/bride-groom.jpg') center/cover,
+ radial-gradient(circle,#8c3447,#21070e);
+}
+.hero h1{font:clamp(50px,10vw,90px) "Great Vibes";color:#f2d59c;margin:10px}
+.hero p{letter-spacing:4px;font-size:11px}
+.section{padding:75px 20px;text-align:center}
+.section h2{
+ font:45px "Great Vibes";color:#e4c181;
+}
+.event-grid{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:15px;max-width:850px;margin:30px auto;
+}
+.event{
+ min-height:260px;position:relative;overflow:hidden;
+ border:1px solid #c5a15c88;
+ display:flex;align-items:end;text-align:left;padding:22px;
+ background-size:cover;background-position:center;
+}
+.event:before{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(transparent,#16050bdc);
+}
+.event div{position:relative;z-index:1}
+.event h3{font:32px "Cormorant Garamond";margin:0;color:#f5d99f}
+.event p{font-size:9px;letter-spacing:2px}
+.mehndi{background-image:linear-gradient(130deg,#244b2b,#9b6d35)}
+.baraat{background-image:linear-gradient(130deg,#130c29,#8b2639)}
+.bridal{background-image:linear-gradient(130deg,#63243b,#d29b73)}
+.walima{background-image:linear-gradient(130deg,#53606a,#c3a66d)}
+.countdown{display:flex;justify-content:center;gap:18px;margin:25px auto}
+.countdown strong{display:block;font:35px "Cormorant Garamond";color:#e8ca8b}
+.countdown span{font-size:9px;letter-spacing:2px}
+.rsvp{
+ max-width:430px;margin:25px auto;padding:25px;
+ border:1px solid #b18b50;
+}
+.rsvp input,.rsvp select{
+ width:100%;padding:13px;margin:8px 0;
+ background:#2e0b15;color:white;border:1px solid #98754c;
+}
+footer{padding:30px;text-align:center;color:#c6a56c;font-size:10px;letter-spacing:3px}
+@media(max-width:550px){
+ .event-grid{grid-template-columns:1fr}
+ .event{min-height:220px}
+ .heart-wrap{height:260px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- SCREEN 1: WELCOME -->
+<section class="screen active" id="welcome">
+ <div class="gold-line"></div>
+ <span class="rose r1">🌹</span><span class="rose r2">🌹</span>
+ <span class="rose r3">✦</span><span class="rose r4">✦</span>
+ <div class="content">
+  <div class="brand">HOORIQA STUDIO</div>
+  <div class="small">A beautiful beginning</div>
+  <div class="heart-wrap">
+   <div class="heart"></div>
+   <div class="heart-center">A & Z</div>
+  </div>
+  <div class="script">Together Forever</div>
+  <div class="names">AYAAN & ZARA</div>
+  <div class="divider"></div>
+  <p class="small">Invite you to celebrate their wedding</p>
+  <br>
+  <button class="gold-button" onclick="goTo('scratch')">Begin Our Story</button>
+ </div>
+</section>
+
+<!-- SCREEN 2: SCRATCH -->
+<section class="screen" id="scratch">
+ <div class="gold-line"></div>
+ <div class="content">
+  <div class="brand">A LITTLE SURPRISE FOR YOU</div>
+  <div class="script">Reveal the Date</div>
+  <p class="small">Scratch the golden heart</p>
+  <div class="scratch-box">
+   <div class="reveal-heart">
+    <div class="date-text">
+     <span>THE WEDDING DAY</span>
+     <strong>12 DEC</strong>
+     <span>2027</span>
+    </div>
+   </div>
+   <canvas id="scratchCanvas"></canvas>
+  </div>
+  <p class="hint" id="scratchHint">USE YOUR FINGER TO REVEAL</p>
+  <button class="gold-button" onclick="goTo('envelope')">Continue</button>
+ </div>
+</section>
+
+<!-- SCREEN 3: ENVELOPE -->
+<section class="screen" id="envelope">
+ <div class="gold-line"></div>
+ <div class="content">
+  <div class="brand">A SPECIAL INVITATION</div>
+  <div class="script">A letter for you</div>
+  <div class="envelope" id="envelopeBox">
+   <div class="flap"></div>
+   <div class="seal">A&Z</div>
+  </div>
+  <p class="small">Our celebration awaits</p>
+  <button class="gold-button" onclick="openInvitation()">TAP TO OPEN</button>
+ </div>
+</section>
+
+<!-- WEDDING STORY -->
+<main id="story" style="display:none">
+ <header class="hero">
+  <div>
+   <div class="brand">HOORIQA STUDIO PRESENTS</div>
+   <p>THE WEDDING CELEBRATION OF</p>
+   <h1>Ayaan & Zara</h1>
+   <p>12 DECEMBER 2027 · KARACHI</p>
+   <div class="divider"></div>
+   <p>Two hearts. One beautiful journey.</p>
+  </div>
+ </header>
+
+ <section class="section">
+  <div class="script">Save the Date</div>
+  <h2>Our Big Day</h2>
+  <div class="countdown">
+   <div><strong id="days">00</strong><span>DAYS</span></div>
+   <div><strong id="hours">00</strong><span>HOURS</span></div>
+   <div><strong id="minutes">00</strong><span>MINUTES</span></div>
+   <div><strong id="seconds">00</strong><span>SECONDS</span></div>
+  </div>
+ </section>
+
+ <section class="section">
+  <div class="script">The Celebrations</div>
+  <h2>Wedding Events</h2>
+  <div class="event-grid">
+   <article class="event mehndi">
+    <div><h3>Mehndi</h3><p>HENNA · MUSIC · CELEBRATION</p><p>10 DECEMBER · 7:00 PM</p></div>
+   </article>
+   <article class="event baraat">
+    <div><h3>Baraat</h3><p>THE GRAND CELEBRATION</p><p>11 DECEMBER · 8:00 PM</p></div>
+   </article>
+   <article class="event bridal">
+    <div><h3>Bridal Entry</h3><p>A MOMENT TO REMEMBER</p><p>11 DECEMBER · 9:00 PM</p></div>
+   </article>
+   <article class="event walima">
+    <div><h3>Walima</h3><p>AN ELEGANT EVENING</p><p>12 DECEMBER · 7:00 PM</p></div>
+   </article>
+  </div>
+ </section>
+
+ <section class="section">
+  <div class="script">We would love to see you</div>
+  <h2>RSVP</h2>
+  <div class="rsvp">
+   <input id="guestName" placeholder="Your name">
+   <select id="attendance">
+    <option value="Yes">Joyfully Accept</option>
+    <option value="No">Unable to Attend</option>
+   </select>
+   <button class="gold-button" onclick="sendRSVP()">SEND RESPONSE</button>
+   <p id="rsvpMessage" class="small"></p>
+  </div>
+  <p class="small">VENUE · KARACHI, PAKISTAN</p>
+ </section>
+
+ <footer>MADE WITH LOVE · HOORIQA STUDIO</footer>
+</main>
+
+<script>
+function goTo(id){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ window.scrollTo(0,0);
+ if(id==='scratch') setTimeout(setupScratch,100);
+}
+
+function setupScratch(){
+ const canvas=document.getElementById('scratchCanvas');
+ const box=canvas.parentElement;
+ const size=box.getBoundingClientRect();
+ const dpr=window.devicePixelRatio||1;
+ canvas.width=size.width*dpr;
+ canvas.height=size.height*dpr;
+ const ctx=canvas.getContext('2d');
+ ctx.scale(dpr,dpr);
+
+ // Heart-shaped scratch foil
+ const w=size.width,h=size.height;
+ ctx.save();
+ ctx.beginPath();
+ const cx=w/2,cy=h/2,scale=Math.min(w,h)*.43;
+ for(let t=0;t<=Math.PI*2;t+=.01){
+  let x=16*Math.pow(Math.sin(t),3);
+  let y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+  let px=cx+x*scale/17;
+  let py=cy-y*scale/17;
+  if(t===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
+ }
+ ctx.closePath();ctx.clip();
+
+ const grad=ctx.createLinearGradient(0,0,w,h);
+ grad.addColorStop(0,'#fff0bd');
+ grad.addColorStop(.25,'#bd9147');
+ grad.addColorStop(.5,'#f4d991');
+ grad.addColorStop(.75,'#9c7137');
+ grad.addColorStop(1,'#f8e2a7');
+ ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+
+ ctx.fillStyle='#fff0c9';
+ ctx.font='12px Montserrat';
+ ctx.textAlign='center';
+ ctx.fillText('✦  SCRATCH HERE  ✦',cx,cy+5);
+ ctx.restore();
+
+ let drawing=false;
+ function erase(e){
+  if(!drawing)return;
+  const rect=canvas.getBoundingClientRect();
+  const x=e.clientX-rect.left,y=e.clientY-rect.top;
+  ctx.save();
+  ctx.globalCompositeOperation='destination-out';
+  ctx.beginPath();ctx.arc(x,y,24,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+ }
+ canvas.onpointerdown=e=>{drawing=true;canvas.setPointerCapture(e.pointerId);erase(e)};
+ canvas.onpointermove=erase;
+ canvas.onpointerup=()=>drawing=false;
+ canvas.onpointercancel=()=>drawing=false;
+}
+function openInvitation(){
+ document.getElementById('envelopeBox').classList.add('open');
+ setTimeout(()=>{
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('story').style.display='block';
+  window.scrollTo(0,0);
+ },1000);
+}
+
+const weddingDate=new Date('2027-12-12T19:00:00').getTime();
+function updateCountdown(){
+ const diff=weddingDate-Date.now();
+ const safe=Math.max(0,diff);
+ document.getElementById('days').textContent=Math.floor(safe/86400000);
+ document.getElementById('hours').textContent=Math.floor(safe/3600000)%24;
+ document.getElementById('minutes').textContent=Math.floor(safe/60000)%60;
+ document.getElementById('seconds').textContent=Math.floor(safe/1000)%60;
+}
+setInterval(updateCountdown,1000);updateCountdown();
+
+function sendRSVP(){
+ const name=document.getElementById('guestName').value.trim();
+ const attendance=document.getElementById('attendance').value;
+ if(!name){alert('Please enter your name');return}
+ const message=`Hello, I am ${name}. RSVP: ${attendance}. Ayaan & Zara wedding.`;
+ window.open('https://wa.me/?text='+encodeURIComponent(message),'_blank');
+ document.getElementById('rsvpMessage').textContent='Your WhatsApp message is ready.';
+}
+</script>
+</body>
+</html>
